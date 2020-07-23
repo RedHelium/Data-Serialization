@@ -8,7 +8,7 @@
 
 ## Example
 
-```
+```C#
 //This is example serialization structure
 [Serializable]
 public struct TestStruct
