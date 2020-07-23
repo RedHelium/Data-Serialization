@@ -2,6 +2,7 @@
  Binary, XML and JSON (Only for Unity) Serialization
 
 ## Usage
+ 0. using RedHeliumGames.IO namespace
  1. Create an instance of the FileManager class.
     1. Call Save<T>(T data) function for save your serialization object
     2. Call T Load<T>() function for load your serialization object from file
