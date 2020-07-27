@@ -34,8 +34,9 @@ namespace RedHeliumGames.IO
         {
             test = new TestStruct() { a = 25, b = "Hello" };
 
-            fileManager = new FileManager(Path.Combine(Application.dataPath, "test123.bin"), 
-            FileManager.SerializerType.Binary);
+
+            fileManager = new FileManager(Path.Combine(Application.dataPath, "Resources", "Files", "test123.json"), 
+            FileManager.SerializerType.UnityJSON);
 
             fileManager.Save(test);
 

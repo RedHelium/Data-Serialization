@@ -2,7 +2,6 @@
 // Author: Denis Brilev (Nickname: Soulook) 
 
 using System.IO;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace RedHeliumGames.IO
@@ -11,18 +10,11 @@ namespace RedHeliumGames.IO
     {
         private XmlSerializer serializer;
 
-        public XMLSerializer(string path, FileMode fileMode = FileMode.OpenOrCreate) : base(path, fileMode)
-        {
-        }
-
-        public XMLSerializer(string path, Encoding encoding, FileMode fileMode = FileMode.OpenOrCreate) 
-        : base(path, encoding, fileMode)
-        {
-        }
+        public XMLSerializer(string path, FileMode fileMode = FileMode.OpenOrCreate) : base(path) { }
 
         public override T Deserialize<T>()
         {
-            using (FileStream fileStream = new FileStream(path, fileMode))
+            using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate))
             {
                 return (T)serializer.Deserialize(fileStream);
             }
@@ -30,7 +22,7 @@ namespace RedHeliumGames.IO
 
         public override void Serialize<T>(T data)
         {
-            using (FileStream fileStream = new FileStream(path, fileMode))
+            using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate))
             {
                 serializer = new XmlSerializer(typeof(T));
                 serializer.Serialize(fileStream, data);

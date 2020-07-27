@@ -2,31 +2,23 @@
 // Author: Denis Brilev (Nickname: Soulook) 
 
 using System.IO;
-using System.Text;
 using UnityEngine;
 
 namespace RedHeliumGames.IO
 {
 
-    public class JSONUnitySerializer : Serializer
+    public class UnityJSONSerializer : Serializer
     {
 
         public string Data { get; protected set; }
 
-        public JSONUnitySerializer(string path, Encoding encoding, FileMode fileMode = FileMode.OpenOrCreate) 
-        : base(path, encoding, fileMode)
-        {
-        }
-
-        public JSONUnitySerializer(string path, FileMode fileMode = FileMode.OpenOrCreate) : base(path, fileMode)
-        {
-        }
+        public UnityJSONSerializer(string path, FileMode fileMode = FileMode.OpenOrCreate) : base(path) { }
 
         public override void Serialize<T>(T data)
         {
-            using (FileStream fileStream = File.Open(path, fileMode, FileAccess.Write))
+            using (FileStream fileStream = File.Open(path, FileMode.OpenOrCreate, FileAccess.Write))
             {
-                using (StreamWriter writer = new StreamWriter(fileStream, encoding))
+                using (StreamWriter writer = new StreamWriter(fileStream))
                 {
                     Data = JsonUtility.ToJson(data);
                     writer.Write(Data);
@@ -36,7 +28,7 @@ namespace RedHeliumGames.IO
 
         public override T Deserialize<T>()
         {
-            using (StreamReader reader = new StreamReader(path, encoding))
+            using (StreamReader reader = new StreamReader(path))
             {
                 try
                 {
@@ -45,5 +37,8 @@ namespace RedHeliumGames.IO
                 catch (IOException e) { throw new IOException(e.Message); }
             }
         }
+
+        public virtual void Overwrite<T>(T data) => JsonUtility.FromJsonOverwrite(Data, data);
+
     }
 }

@@ -3,7 +3,6 @@
 
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 
 namespace RedHeliumGames.IO
 {
@@ -11,20 +10,15 @@ namespace RedHeliumGames.IO
     {
         protected BinaryFormatter binaryFormatter;
 
-        public BinarySerializer(string path, FileMode fileMode = FileMode.OpenOrCreate) : base(path, fileMode)
+        public BinarySerializer(string path, FileMode fileMode = FileMode.OpenOrCreate) : base(path)
         {
              binaryFormatter = new BinaryFormatter();
         }
 
-        public BinarySerializer(string path, Encoding encoding, FileMode fileMode = FileMode.OpenOrCreate) 
-        : base(path, encoding, fileMode)
-        {
-            binaryFormatter = new BinaryFormatter();
-        }
 
         public override T Deserialize<T>()
         {
-            using (FileStream fileStream = new FileStream(path, fileMode))
+            using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate))
             {
                 return (T)binaryFormatter.Deserialize(fileStream);
             }
@@ -32,7 +26,7 @@ namespace RedHeliumGames.IO
 
         public override void Serialize<T>(T data)
         {
-            using (FileStream fileStream = new FileStream(path, fileMode))
+            using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate))
             {
                 binaryFormatter.Serialize(fileStream, data);
             }
