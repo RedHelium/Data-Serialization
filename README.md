@@ -1,3 +1,5 @@
+![Data Serialization](/Editor/Icons/data-serialization.jpg)
+
 # Data Serialization
  Binary, XML and JSON (Only for Unity) Serialization
 
